@@ -1,4 +1,4 @@
-import { changeName, changeCost } from "../store";
+import { changeName, changeCost, AddCar } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 function CarForm(){
     const dispatch=useDispatch();
@@ -8,6 +8,7 @@ function CarForm(){
         cost:state.formReducer.cost
        }
     })
+    
     const handelnameChange=(event)=>{
         dispatch(changeName(event.target.value))
     }
@@ -15,10 +16,15 @@ function CarForm(){
     const handelcostChange=(event)=>{
         dispatch(changeCost(event.target.value));
     }
+
+    const submitForm=(e)=>{
+        e.preventDefault();
+        dispatch(AddCar({name:name,cost:cost}))
+    }
     return(
         <div className="car-form panel">
            <h4 className="subtitle is-3">Add Car</h4>
-           <form>
+           <form onSubmit={submitForm}>
             <div className="field-group">
                 <div className="field">
                     <label className="label">Name</label>
@@ -37,6 +43,7 @@ function CarForm(){
                         onChange={handelcostChange}
                     />
                 </div>
+                <button>Submit</button>
             </div>
            </form>
         </div>
